@@ -94,7 +94,7 @@ const Sidebar=()=>(
   </div>
   <footer className="main-footer">
     <div className="footer-left">
-      Copyright &copy; 2020 <div className="bullet"></div> Design By <a href="#">MIS Team</a>
+      Copyright &copy; 2020 <div className="bullet"></div> Design By <a href="#">Imposters</a>
     </div>
     <div className="footer-right">
     </div>

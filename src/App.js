@@ -42,6 +42,51 @@ class App extends Component {
               name="Home"
               render={(props) => <Layout {...props} />}
             />
+            <Route
+              path="/fellowship/fellowshipBill/jrf"
+              name="FellowshipBillJrf"
+              render={(props) => <Layout {...props} />}
+            />
+            <Route
+              path="/fellowship/fellowshipExtension"
+              name="FellowShipExtenstion"
+              render={(props) => <Layout {...props} />}
+            />
+            <Route
+              path="/fellowship/LeaveMaster"
+              name="LeaveMaster"
+              render={(props) => <Layout {...props} />}
+            />
+            <Route
+              path="/fellowship/fellow/:id"
+              name="fellowEdit"
+              render={(props) => <Layout {...props} />}
+            />
+            <Route
+              path="/hostelManagement/download_empty_rooms"
+              name="ManageHostel"
+              render={(props) => <Layout {...props} />}
+            />
+            <Route
+              path="/hostelManagement/manage_hostel"
+              name="ManageHostel"
+              render={(props) => <Layout {...props} />}
+            />
+            <Route
+              path="/hostelManagement/block_unblock_rooms"
+              name="ManageHostel"
+              render={(props) => <Layout {...props} />}
+            />
+            <Route
+              path="/hostelManagement/manage_student_contact"
+              name="ManageHostel"
+              render={(props) => <Layout {...props} />}
+            />
+            <Route
+              path="/hostelManagement/bulk_upload_contact_student"
+              name="ManageHostel"
+              render={(props) => <Layout {...props} />}
+            />
             <Route path="*">
               <FileNotFound />
             </Route>{" "}

@@ -4,7 +4,8 @@ import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import Session from "react-session-api";
 import Subheader from "../core/Subheader";
 // routes config
-import routes from "./../Routes";
+import fellowshipRoutes from "./../Routes/fellowshipRoutes";
+import hostelRoutes from './../Routes/hostelRoutes';
 
 class Content extends Component {
   constructor(props) {
@@ -27,8 +28,8 @@ class Content extends Component {
           <Subheader pathname={this.props.location.pathname} />
           <Switch>
             {" "}
-            {routes.map((route, idx) => {
-              //  console.log(route.name)
+            {fellowshipRoutes.map((route, idx) => {
+              //  console.log(route, idx);
               return (
                 route.component && (
                   <Route
@@ -46,7 +47,27 @@ class Content extends Component {
                   />
                 )
               );
-            })}{" "}
+            })}
+            {hostelRoutes.map((route, idx) => {
+              return (
+                route.component && (
+                  <Route
+                    key={idx}
+                    path={route.path}
+                    exact={route.exact}
+                    name={route.name}
+                    render={(props) =>
+                      this.state.isAuthenticated ? (
+                        <route.component {...props} />
+                      ) : (
+                        <Redirect to="/Logouts" />
+                      )
+                    }
+                  />
+                )
+              );
+            })}
+            {" "}
             <Redirect from="/" to="/home" />
           </Switch>
 
