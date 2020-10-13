@@ -7,6 +7,7 @@ import reducer from './store/reducers/reducer'
 import { CookiesProvider } from 'react-cookie';
 import { sessionService } from 'redux-react-session';
 import * as serviceWorker from './serviceWorker';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import thunk from 'redux-thunk';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

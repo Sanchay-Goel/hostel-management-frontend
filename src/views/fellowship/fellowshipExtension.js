@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import Layout from '../../core/Layout'
 import { API } from '../../config';
 import { Link } from 'react-router-dom';
 import Session from 'react-session-api'
@@ -172,7 +170,6 @@ class fellowshipExtension extends Component {
 
 
     render() {
-        const { admn_no, course, branch, from_date, to_date, error, status } = this.state
         return ( 
         <div> {
                 this.state.showMsg ?

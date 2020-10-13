@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Subheader from "../core/Subheader";
 class Home extends Component {
   constructor(props) {
     super(props);

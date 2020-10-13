@@ -1,8 +1,6 @@
-import React, { Suspense, Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from "react";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import Session from "react-session-api";
-import Subheader from "../core/Subheader";
 // routes config
 import fellowshipRoutes from "./../Routes/fellowshipRoutes";
 import hostelRoutes from './../Routes/hostelRoutes';
@@ -25,7 +23,7 @@ class Content extends Component {
     return (
       <div>
         <div className="main-content">
-          <Subheader pathname={this.props.location.pathname} />
+          {/* <Subheader pathname={this.props.location.pathname} /> */}
           <Switch>
             {" "}
             {fellowshipRoutes.map((route, idx) => {

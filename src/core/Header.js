@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
-import Sidenav from "./../core/Menu";
+import { Link } from "react-router-dom";
 import Session from "react-session-api";
-import { instanceOf } from "prop-types";
 import { connect } from "react-redux";
-import { useCookies } from "react-cookie";
 let photo = "";
 class Header extends Component {
   constructor(props) {
