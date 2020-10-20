@@ -4,7 +4,6 @@ import axios from "axios";
 import MaterialTable from "material-table";
 import Session from "react-session-api";
 import {Table} from 'reactstrap';
-import { Button } from "reactstrap";
 import { Link, withRouter } from "react-router-dom";
 
 class ManageHostel extends Component {
@@ -22,9 +21,37 @@ class ManageHostel extends Component {
         this.setState({
           hostels: response.data.response,
         });
-        console.log(this.state.hostels.response);
       })
       .catch(error => console.log(error));
+  }
+
+  deleteHostelWithId = (id) => {
+    console.log("Hostel with id: "+id+" is deleted");
+    axios({
+        method: 'DELETE',
+        url: `${API}/hostels/${id}`,
+        //  timeout: 4000,    // 4 seconds timeout
+        headers: {
+            Accepts: 'application/json',
+            "Content-Type": "application/json"
+        },
+        data: {
+          id: id
+        }
+    })
+    .then(response => {
+      console.log("Response : ");
+      console.log(response);
+      this.getHostelsDetails();
+    })
+    .catch(error => {
+      console.log("Error : ");
+      console.log(error);
+    });
+  }
+
+  editHostelWithId = (id) => {
+    console.log("Hostel with id: "+id+" is redirected to edit");
   }
 
   componentDidMount() {
@@ -38,7 +65,7 @@ class ManageHostel extends Component {
         <div>
           <Link className="btn btn-primary"  to="/hostelManagement/add_hostel"><span>Add Hostel</span></Link>
         </div>
-        <Table striped bordered className="bg-light" >
+        <Table bordered className="bg-light" >
           <thead>
             <tr>
               <th>#</th>
@@ -56,11 +83,11 @@ class ManageHostel extends Component {
                 return (
                   <tr key={idx} className="text-dark">
                     <th scope="row">{idx}</th>
-                    <td>{hostel.name}</td>
-                    <td>{hostel.block}</td>
+                    <td>{hostel.hostel_name}</td>
+                    <td>{hostel.block_name}</td>
                     <td><i className="fa fa-plus"></i></td>
-                    <td><i className="fa fa-pencil-alt"></i></td>
-                    <td><i className="fa fa-trash"></i></td>
+                    <td><i className="fa fa-pencil-alt" onClick={() => this.editHostelWithId(hostel.id)}></i></td>
+                    <td><i className="fa fa-trash" onClick={() => this.deleteHostelWithId(hostel.id)}></i></td>
                   </tr>
                 );
               })
