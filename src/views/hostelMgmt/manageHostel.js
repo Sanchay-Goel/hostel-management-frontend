@@ -51,7 +51,8 @@ class ManageHostel extends Component {
   }
 
   editHostelWithId = (id) => {
-    console.log("Hostel with id: "+id+" is redirected to edit");
+    // console.log("Hostel with id: "+id+" is redirected to edit - " + `/hostelManagement/edit_hostel/${id}`);
+    this.props.history.push(`/hostelManagement/edit_hostel/${id}`);
   }
 
   componentDidMount() {
@@ -86,8 +87,8 @@ class ManageHostel extends Component {
                     <td>{hostel.hostel_name}</td>
                     <td>{hostel.block_name}</td>
                     <td><i className="fa fa-plus"></i></td>
-                    <td><i className="fa fa-pencil-alt" onClick={() => this.editHostelWithId(hostel.id)}></i></td>
-                    <td><i className="fa fa-trash" onClick={() => this.deleteHostelWithId(hostel.id)}></i></td>
+                    <td><i className="fa fa-pencil-alt" onClick={() => this.editHostelWithId(hostel.id)} style={{cursor:'pointer'}}></i></td>
+                    <td><i className="fa fa-trash" onClick={() => this.deleteHostelWithId(hostel.id)} style={{cursor:'pointer'}}></i></td>
                   </tr>
                 );
               })

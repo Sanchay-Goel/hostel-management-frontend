@@ -5,31 +5,52 @@ import Session from "react-session-api";
 import { Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Redirect } from "react-router-dom";
 
-class AddHostel extends Component {
+class EditHostel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hostels: ['Amber-(A, B)', 'Amber-(C, D)', 'Diamond', 'Emerald', 'International-hostel', 'Jasper-A', 'Jasper-C', 'Jasper-B', 'Jasper-D', 'Opal', 'Rosaline-Old', 'Rosaline-Left', 'Rosaline-Right', 'Ruby-1', 'Ruby-2', 'Ruby-Annexe', 'Sapphire', 'Topaz',],
-      blocks: ['A', 'B', 'C', 'D', 'E', 'Annexure', 'N/A'],
+      id: null,
       hostel_name: '',
       block_name: '',
-      room_in_floor: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+      room_in_floor: [],
       errorMessage: "",
-      redirectToManageHostel: false
+      redirectToManageHostel: false,
+      validHostel: false,
     }
-    this.addHostelDetails = this.addHostelDetails.bind(this);
+    this.modifyHostelDetails = this.modifyHostelDetails.bind(this);
   }
 
   componentDidMount() {
-    
-  }
-
-  onChange = (event) => {
-    let nam = event.target.name;
-    let val = event.target.value;
-    this.setState({
-      [nam]: val,
-    });
+    console.log('Hostel id : ' + this.props.match.params.id);
+    axios.get(`${API}/hostels/${this.props.match.params.id}`)
+      .then(response => {
+        console.log(response);
+        let old_rooms_in_floor = [];
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor0);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor1);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor2);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor3);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor4);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor5);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor6);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor7);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor8);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor9);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor10);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor11);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor12);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor13);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor14);
+        old_rooms_in_floor.push(response.data.response[0].room_in_floor15);
+        this.setState({
+          id: response.data.response[0].id,
+          hostel_name: response.data.response[0].hostel_name,
+          block_name: response.data.response[0].block_name,
+          room_in_floor: old_rooms_in_floor,
+          validHostel: true,
+        });
+      })
+      .catch(error => console.log(error));
   }
 
   onChangeFloor = (event) => {
@@ -76,23 +97,24 @@ class AddHostel extends Component {
     });
   }
 
-  addHostelDetails(e) {
+  modifyHostelDetails(e) {
     e.preventDefault();
     this.setState({
       errorMessage: ""
     });
-    console.log(this.state);
+    // console.log(this.state);
     let formIsValid = this.handleValidation();
     if(formIsValid.errorMessage === ''){
         axios({
-          method: 'post',
-          url: `${API}/hostels`,
+          method: 'put',
+          url: `${API}/hostels/${this.state.id}`,
           //  timeout: 4000,    // 4 seconds timeout
           headers: {
               Accepts: 'application/json',
               "Content-Type": "application/json"
           },
           data: {
+              id: this.state.id,
               hostel_name: this.state.hostel_name,
               block_name: this.state.block_name,
               room_in_floor0: this.state.room_in_floor[0],
@@ -123,7 +145,6 @@ class AddHostel extends Component {
         console.log(error);
       });
       alert("Form submitted");
-      // this.props.history.push('/hostelManagement/manage_hostel');
     }
     else{
       this.setState({
@@ -138,39 +159,29 @@ class AddHostel extends Component {
         <Redirect to="/hostelManagement/manage_hostel" />
       );
     }
+    if(this.state.validHostel === false) {
+      return (
+        <div>
+          <h1>Edit Hostel</h1>
+          <h3 className="text-center">Invalid Request</h3>
+        </div>
+      );
+    }
     return (
       <div>
-        <h1>Add Hostels</h1>
-        <Form onSubmit={(value) => this.addHostelDetails(value)}>
+        <h1>Edit Hostel</h1>
+        <Form onSubmit={(value) => this.modifyHostelDetails(value)}>
           <Row form>
             <Col md={6}>
               <FormGroup>
                 <Label for="hostelSelect">Select Hostel</Label>
-                <Input type="select" name="hostel_name" id="hostelSelect" onChange={this.onChange} >
-                  <option hidden>Choose Hostel</option>
-                  {
-                    this.state.hostels.map((hostel, idx) => {
-                      return (
-                        <option key={idx}>{hostel}</option>
-                      )
-                    })
-                  }
-                </Input>
+                <Input type="text" name="hostel_name" id="hostelSelect" placeholder={this.state.hostel_name} disabled={true}/>
               </FormGroup>
             </Col>
             <Col md={6}>
               <FormGroup>
                 <Label for="blockSelect">Select Block</Label>
-                <Input type="select" name="block_name" id="blockSelect" onChange={this.onChange}>
-                  <option hidden>Choose Block</option>
-                {
-                    this.state.blocks.map((block, idx) => {
-                      return (
-                        <option key={idx}>{block}</option>
-                      )
-                    })
-                  }
-                </Input>
+                <Input type="text" name="block_name" id="blockSelect" placeholder={this.state.block_name} disabled={true}/>
               </FormGroup>
             </Col>
           </Row>
@@ -181,7 +192,14 @@ class AddHostel extends Component {
                   <Col md={6} key={idx}>
                     <FormGroup>
                       <Label for={"selectFloor"+idx}>Rooms in {idx} Floor</Label>
-                      <Input type="number" name={idx} id={"selectFloor"+idx} placeholder="Select rooms" min="0" max="100" onChange={this.onChangeFloor}/>
+                      <Input 
+                          type="number" 
+                          name={idx} 
+                          id={"selectFloor"+idx} 
+                          placeholder={(this.state.room_in_floor[idx])!==null ? (this.state.room_in_floor[idx]) : ("Select Rooms")} 
+                          min="0" max="100" 
+                          onChange={this.onChangeFloor}
+                      />
                     </FormGroup>
                   </Col>
                 );
@@ -193,10 +211,10 @@ class AddHostel extends Component {
               </p>
             </Col>
           </Row>
-          <Button type="submit" color="primary">Add Hostel</Button>
+          <Button type="submit" color="primary">Modify Hostel</Button>
         </Form>
       </div>
     );
   }
 }
-export default AddHostel;
+export default EditHostel;

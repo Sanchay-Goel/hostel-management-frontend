@@ -78,6 +78,11 @@ class App extends Component {
               render={(props) => <Layout {...props} />}
             />
             <Route
+              path="/hostelManagement/edit_hostel/:id"
+              name="EditHostel"
+              render={(props) => <Layout {...props} />}
+            />
+            <Route
               path="/hostelManagement/block_unblock_rooms"
               name="ManageHostel"
               render={(props) => <Layout {...props} />}
