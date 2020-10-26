@@ -298,7 +298,7 @@ alert();
                     {" "}
                     <img
                       alt="image"
-                      src={window.location.origin + photo}
+                      src={window.location.origin + '/' +  photo}
                       className="user-img-radious-style"
                     />{" "}
                     <span className="d-sm-none d-lg-inline-block"></span>

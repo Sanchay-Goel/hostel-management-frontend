@@ -89,12 +89,22 @@ class App extends Component {
             />
             <Route
               path="/hostelManagement/manage_student_contact"
-              name="ManageHostel"
+              name="ManageStudentContact"
+              render={(props) => <Layout {...props} />}
+            />
+            <Route
+              path="/hostelManagement/add_student_contact"
+              name="AddStudentContact"
               render={(props) => <Layout {...props} />}
             />
             <Route
               path="/hostelManagement/bulk_upload_contact_student"
               name="ManageHostel"
+              render={(props) => <Layout {...props} />}
+            />
+            <Route
+              path="/hostelManagement/hostel_booking"
+              name="HostelBooking"
               render={(props) => <Layout {...props} />}
             />
             <Route path="*">

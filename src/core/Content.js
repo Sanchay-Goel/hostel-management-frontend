@@ -26,45 +26,63 @@ class Content extends Component {
           {/* <Subheader pathname={this.props.location.pathname} /> */}
           <Switch>
             {" "}
-            {fellowshipRoutes.map((route, idx) => {
-              //  console.log(route, idx);
-              return (
-                route.component && (
-                  <Route
-                    key={idx}
-                    path={route.path}
-                    exact={route.exact}
-                    name={route.name}
-                    render={(props) =>
-                      this.state.isAuthenticated ? (
-                        <route.component {...props} />
-                      ) : (
-                        <Redirect to="/Logouts" />
-                      )
-                    }
-                  />
-                )
-              );
-            })}
-            {hostelRoutes.map((route, idx) => {
-              return (
-                route.component && (
-                  <Route
-                    key={idx}
-                    path={route.path}
-                    exact={route.exact}
-                    name={route.name}
-                    render={(props) =>
-                      this.state.isAuthenticated ? (
-                        <route.component {...props} />
-                      ) : (
-                        <Redirect to="/Logouts" />
-                      )
-                    }
-                  />
-                )
-              );
-            })}
+            {
+              fellowshipRoutes.map((route, idx) => {
+                //  console.log(route, idx);
+                return (
+                  route.component && (
+                    <Route
+                      key={idx}
+                      path={route.path}
+                      exact={route.exact}
+                      name={route.name}
+                      render={(props) =>
+                        this.state.isAuthenticated ? (
+                          <route.component {...props} />
+                        ) : (
+                          <Redirect to="/Logouts" />
+                        )
+                      }
+                    />
+                  )
+                );
+              })
+            }
+            {
+              hostelRoutes.map((route, idx) => {
+                let auth = Session.get('auth_id');
+                if(route.userAuth===undefined || route.userAuth.indexOf(auth)===-1){
+                  return (
+                    route.component && (
+                      <Route
+                        key={idx}
+                        path={route.path}
+                        exact={route.exact}
+                        name={route.name}
+                        render={(props) => (<Redirect to="/home" /> )}
+                      />
+                    )
+                  );
+                }
+                return (
+                  route.component && (
+                    <Route
+                      key={idx}
+                      path={route.path}
+                      exact={route.exact}
+                      name={route.name}
+                      render={(props) =>
+                        this.state.isAuthenticated ? (
+                          <route.component {...props} />
+                        ) : (
+                          <Redirect to="/Logouts" />
+                        )
+                      }
+                    />
+                  )
+                );
+              })
+            }
             {" "}
             <Redirect from="/" to="/home" />
           </Switch>

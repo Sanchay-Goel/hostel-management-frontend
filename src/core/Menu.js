@@ -25,7 +25,7 @@ const Menu = () => (
         </div>
         <div className="sidebar-user">
           <div className="sidebar-user-picture">
-            <img alt="image" src={window.location.origin + photo} />
+            <img alt="image" src={window.location.origin + '/' +  photo} />
           </div>
           <div className="sidebar-user-details">
             <div className="user-name">{Session.get('name')}({Session.get('id')})</div>
@@ -60,17 +60,36 @@ const Menu = () => (
                  <li className={isActive('/fellowship/fellowshipBill/jrf') ? "active": ""}><Link className="nav-link"  to="/fellowship/fellowshipBill/jrf"><span>Fellowship Bill(JRF)</span></Link></li>
               </ul>
           </li>
-          <li className="dropdown">
-            <a href="#" className="menu-toggle nav-link has-dropdown"><i
-                  data-feather="briefcase"></i><span>Hostel Student Admin</span></a>
-              <ul className="dropdown-menu">
-                 <li className={isActive('/hostelManagement/download_empty_rooms') ? "active": ""}><Link className="nav-link"  to="/hostelManagement/download_empty_rooms"><span>Empty Rooms</span></Link></li>
-                 <li className={isActive('/hostelManagement/manage_hostel') ? "active": ""}><Link className="nav-link"  to="/hostelManagement/manage_hostel"><span>Manage Hostels</span></Link></li>
-                 <li className={isActive('/hostelManagement/block_unblock_rooms') ? "active": ""}><Link className="nav-link"  to="/hostelManagement/block_unblock_rooms"><span>Block/ Unblock Rooms</span></Link></li>
-                 <li className={isActive('/hostelManagement/manage_student_contact') ? "active": ""}><Link className="nav-link"  to="/hostelManagement/manage_student_contact"><span>Manage Students Details</span></Link></li>
-                 <li className={isActive('/hostelManagement/bulk_upload_contact_student') ? "active": ""}><Link className="nav-link"  to="/hostelManagement/bulk_upload_contact_student"><span>Bulk Upload Details</span></Link></li>
-              </ul>
-          </li>
+          {
+            (Session.get('auth_id')==='emp')
+            &&
+            (
+              <li className="dropdown">
+                <a href="#" className="menu-toggle nav-link has-dropdown"><i
+                      data-feather="briefcase"></i><span>Hostel Student Admin</span></a>
+                  <ul className="dropdown-menu">
+                     <li className={isActive('/hostelManagement/download_empty_rooms') ? "active": ""}><Link className="nav-link"  to="/hostelManagement/download_empty_rooms"><span>Empty Rooms</span></Link></li>
+                     <li className={isActive('/hostelManagement/manage_hostel') ? "active": ""}><Link className="nav-link"  to="/hostelManagement/manage_hostel"><span>Manage Hostels</span></Link></li>
+                     <li className={isActive('/hostelManagement/block_unblock_rooms') ? "active": ""}><Link className="nav-link"  to="/hostelManagement/block_unblock_rooms"><span>Block/ Unblock Rooms</span></Link></li>
+                     <li className={isActive('/hostelManagement/manage_student_contact') ? "active": ""}><Link className="nav-link"  to="/hostelManagement/manage_student_contact"><span>Manage Students Details</span></Link></li>
+                     <li className={isActive('/hostelManagement/bulk_upload_contact_student') ? "active": ""}><Link className="nav-link"  to="/hostelManagement/bulk_upload_contact_student"><span>Bulk Upload Details</span></Link></li>
+                  </ul>
+              </li>
+            )
+          }
+          {
+            (Session.get('auth_id')==='stu')
+            &&
+            (
+              <li className="dropdown">
+                <a href="#" className="menu-toggle nav-link has-dropdown"><i
+                      data-feather="briefcase"></i><span>Hostel Student</span></a>
+                  <ul className="dropdown-menu">
+                    <li className={isActive('/hostelManagement/hostel_booking') ? "active": ""}><Link className="nav-link"  to="/hostelManagement/hostel_booking"><span>Hostel Booking</span></Link></li>
+                  </ul>
+              </li>
+            )
+          }
 
 
         </ul>
