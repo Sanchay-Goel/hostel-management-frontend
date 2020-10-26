@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { API } from "../../config";
+import { API } from '../../config';
 import axios from "axios";
 import Session from "react-session-api";
+import { Link, withRouter } from "react-router-dom";
 import { Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { Link } from "react-router-dom";
 
-class BulkUploadStudent extends Component {
+class AddStudentContact extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,7 +45,7 @@ class BulkUploadStudent extends Component {
   render(props) {
     return (
       <div>
-        <h1>Bulk Upload Students Details</h1>
+        <h2>Add student contact</h2>
         <div>
           <Form>
             <Row form>
@@ -77,22 +77,21 @@ class BulkUploadStudent extends Component {
                   </Input>
                 </FormGroup>
               </Col>
-              <Col md={2}>
-                <Link to="/assets/sample.xlsx" onClick={e => e.preventDefault()}>
-                  Download CSV Sample <i className="fa fa-download"></i>
-                </Link>
-              </Col>
               <Col md={5}>
-
+                <FormGroup>
+                  <Label for="selectAdmNumber">Admission No.</Label>
+                  <Input type="text" name="adm_number" id="selectAdmNumber" placeholder="" onChange={this.onChange}/>
+                </FormGroup>
               </Col>
-              <Col md={5}>
-                <Button type="submit" color="primary" className="m-auto">Save</Button>
-              </Col>
+            </Row>
+            <Row>
+              <Button type="submit" color="primary" className="m-auto">Save</Button>
             </Row>
           </Form>      
         </div>
+        
       </div>
     );
   }
 }
-export default BulkUploadStudent;
+export default withRouter(AddStudentContact);

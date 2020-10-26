@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { API } from "../../config";
 import axios from "axios";
 import Session from "react-session-api";
-import { Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { Redirect } from "react-router-dom";
 
 class AddHostel extends Component {

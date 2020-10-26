@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { API } from "../../config";
+import { API } from '../../config';
 import axios from "axios";
 import Session from "react-session-api";
+import { Link, withRouter } from "react-router-dom";
 import { Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { Link } from "react-router-dom";
 
-class BulkUploadStudent extends Component {
+class ManageStudentContact extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,11 +45,15 @@ class BulkUploadStudent extends Component {
   render(props) {
     return (
       <div>
-        <h1>Bulk Upload Students Details</h1>
+        <h2>Manage students contact</h2>
+        <div className="my-4 p-4 text-center bg-white shadow">
+          <Link className="btn btn-primary" to="/hostelManagement/add_student_contact"><span>Add New Student</span></Link>
+        </div>
+        <h2>Search Students</h2>
         <div>
           <Form>
             <Row form>
-              <Col md={5}>
+              <Col md={6}>
                 <FormGroup>
                   <Label for="hostelSelect">Select Hostel</Label>
                   <Input type="select" name="hostel_name" id="hostelSelect" onChange={this.onChange} >
@@ -64,7 +68,7 @@ class BulkUploadStudent extends Component {
                   </Input>
                 </FormGroup>
               </Col>
-              <Col md={5}>
+              <Col md={6}>
                 <FormGroup>
                   <Label for="blockSelect">Select Block</Label>
                   <Input type="select" name="block_name" id="blockSelect" onChange={this.onChange}>
@@ -77,22 +81,33 @@ class BulkUploadStudent extends Component {
                   </Input>
                 </FormGroup>
               </Col>
-              <Col md={2}>
-                <Link to="/assets/sample.xlsx" onClick={e => e.preventDefault()}>
-                  Download CSV Sample <i className="fa fa-download"></i>
-                </Link>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="sessionSelect">Session</Label>
+                  <Input type="select" name="hostel_name" id="sessionSelect" onChange={this.onChange} >
+                    <option hidden>Select Value</option>
+                    
+                  </Input>
+                </FormGroup>
               </Col>
-              <Col md={5}>
-
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="sessionYearSelect">Session Year</Label>
+                  <Input type="select" name="block_name" id="sessionYearSelect" onChange={this.onChange}>
+                    <option hidden>Select Value</option>
+                  
+                  </Input>
+                </FormGroup>
               </Col>
-              <Col md={5}>
-                <Button type="submit" color="primary" className="m-auto">Save</Button>
-              </Col>
+            </Row>
+            <Row>
+              <Button type="submit" color="success" className="m-auto">Show</Button>
             </Row>
           </Form>      
         </div>
+        
       </div>
     );
   }
 }
-export default BulkUploadStudent;
+export default withRouter(ManageStudentContact);
