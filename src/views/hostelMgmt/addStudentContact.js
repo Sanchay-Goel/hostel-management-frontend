@@ -12,7 +12,10 @@ class AddStudentContact extends Component {
       hostels: [],
       distinctHostels: [],
       hostel_name: "",
+      block_name: "",
+      adm_no: null,
     };
+    this.saveStudent = this.saveStudent.bind(this);
   }
 
   getHostelsDetails() {
@@ -35,6 +38,34 @@ class AddStudentContact extends Component {
     let val = event.target.value;
     this.setState({
       [nam]: val,
+    });
+  }
+
+  saveStudent(event) {
+    event.preventDefault();
+    let student = {
+      hostel_name: this.state.hostel_name,
+      adm_no: this.state.adm_no,
+    }
+    let students = [student];
+    console.log(students);
+    axios({
+        method: 'post',
+        url: `${API}/hostels/students`,
+        headers: {
+            Accepts: 'application/json',
+            "Content-Type": "application/json"
+        },
+        data: {
+          students: students,
+        }
+    })
+    .then(response => {
+      console.log(response);
+      window.location.reload();
+    })
+    .catch(error => {
+      console.log(error);
     });
   }
 
@@ -80,12 +111,16 @@ class AddStudentContact extends Component {
               <Col md={5}>
                 <FormGroup>
                   <Label for="selectAdmNumber">Admission No.</Label>
-                  <Input type="text" name="adm_number" id="selectAdmNumber" placeholder="" onChange={this.onChange}/>
+                  <Input type="text" name="adm_no" id="selectAdmNumber" placeholder="" onChange={this.onChange}/>
                 </FormGroup>
               </Col>
             </Row>
             <Row>
-              <Button type="submit" color="primary" className="m-auto">Save</Button>
+              <Button type="submit" color="primary" className="m-auto" onClick={this.saveStudent} 
+                      disabled={(this.state.hostel_name!=="" && this.state.block_name!=="" && this.state.adm_no!==null) ? false:true}
+              >
+                Upload
+              </Button>
             </Row>
           </Form>      
         </div>

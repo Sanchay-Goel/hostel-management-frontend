@@ -3,7 +3,7 @@ import { API } from '../../config';
 import axios from "axios";
 import Session from "react-session-api";
 import { Link, withRouter } from "react-router-dom";
-import { Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Row, Col, Button, Form, FormGroup, Label, Input, Table } from 'reactstrap';
 
 class ManageStudentContact extends Component {
   constructor(props) {
@@ -12,7 +12,10 @@ class ManageStudentContact extends Component {
       hostels: [],
       distinctHostels: [],
       hostel_name: "",
+      block_name: "",
+      students: [],
     };
+    this.getHostelStudentsList = this.getHostelStudentsList.bind(this);
   }
 
   getHostelsDetails() {
@@ -25,6 +28,22 @@ class ManageStudentContact extends Component {
         this.setState({
           hostels: response.data.response,
           distinctHostels: unique
+        });
+      })
+      .catch(error => console.log(error));
+  }
+
+  getHostelStudentsList(event) {
+    event.preventDefault();
+    this.setState({
+      students: [],
+    });
+    let hostel = this.state.hostel_name;
+    axios.get(`${API}/hostels/students/${hostel}`)
+      .then(response => {
+        console.log(response.data.response);
+        this.setState({
+          students: response.data.response,
         });
       })
       .catch(error => console.log(error));
@@ -81,7 +100,7 @@ class ManageStudentContact extends Component {
                   </Input>
                 </FormGroup>
               </Col>
-              <Col md={6}>
+              {/* <Col md={6}>
                 <FormGroup>
                   <Label for="sessionSelect">Session</Label>
                   <Input type="select" name="hostel_name" id="sessionSelect" onChange={this.onChange} >
@@ -98,13 +117,43 @@ class ManageStudentContact extends Component {
                   
                   </Input>
                 </FormGroup>
-              </Col>
+              </Col> */}
             </Row>
             <Row>
-              <Button type="submit" color="success" className="m-auto">Show</Button>
+              <Button type="submit" color="success" className="m-auto"
+                      onClick={this.getHostelStudentsList} 
+                      disabled={(this.state.hostel_name!=="" && this.state.block_name!=="") ? false : true}
+              >
+                Show
+              </Button>
             </Row>
-          </Form>      
+          </Form>          
         </div>
+        {
+          (this.state.students.length > 0 && 
+            <Table bordered className="bg-light m-3" >
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Hostel Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  this.state.students.map((student, idx) => {
+                    idx += 1;
+                    return (
+                      <tr key={idx} className="text-dark">
+                        <th scope="row">{idx}</th>
+                        <td>{student.adm_no}</td>
+                      </tr>
+                    );
+                  })
+                }
+              </tbody>
+            </Table>
+          )
+        }
         
       </div>
     );
