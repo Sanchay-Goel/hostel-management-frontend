@@ -10,7 +10,7 @@ git clone https://github.com/sandeepism/hostel-management-frontend
 ```
 npm install
 ```
-3. Start the application. Make sure the server is running. Application will run on https://localhost:3000
+3. Start the application. Make sure the server is running. Application will run on http://localhost:3000
 ```
 npm start
 ```
